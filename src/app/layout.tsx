@@ -6,6 +6,9 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingContact } from "@/components/layout/FloatingContact";
+import { SpotlightTracker } from "@/components/ui/SpotlightTracker";
+import { SmoothScroll } from "@/components/ui/SmoothScroll";
+import "lenis/dist/lenis.css";
 import { SITE } from "@/content/site";
 import { OFFICES } from "@/content/offices";
 
@@ -89,6 +92,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <Footer />
         <FloatingContact />
+        <SpotlightTracker />
+        <SmoothScroll />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}

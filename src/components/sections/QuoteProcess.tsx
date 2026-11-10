@@ -17,7 +17,7 @@ export function QuoteProcess() {
         style={{ height: "calc(100% - 3rem)" }}
         initial={reduce ? false : { scaleY: 0 }}
         whileInView={{ scaleY: 1 }}
-        viewport={{ once: true, margin: "-20%" }}
+        viewport={{ once: true, margin: "0px 0px -12% 0px" }}
         transition={{ duration: 1.6, ease: "easeInOut" }}
         aria-hidden
       />
@@ -25,7 +25,7 @@ export function QuoteProcess() {
         className="absolute left-0 top-7 hidden h-px w-full origin-left bg-brand md:block"
         initial={reduce ? false : { scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
-        viewport={{ once: true, margin: "-20%" }}
+        viewport={{ once: true, margin: "0px 0px -12% 0px" }}
         transition={{ duration: 1.6, ease: "easeInOut" }}
         aria-hidden
       />
@@ -36,7 +36,7 @@ export function QuoteProcess() {
             className="relative flex gap-5 md:block"
             initial={reduce ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-20%" }}
+            viewport={{ once: true, margin: "0px 0px -12% 0px" }}
             transition={{ delay: 0.25 + i * 0.35, duration: 0.6 }}
           >
             <span className="relative z-10 grid size-12 shrink-0 place-items-center rounded-2xl border border-white/10 bg-navy text-white shadow-[0_0_30px_-6px_rgba(29,179,255,0.6)] md:size-14">

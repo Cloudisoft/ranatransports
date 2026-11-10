@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { LegacyRoad, type Chapter } from "@/components/graphics/LegacyRoad";
 import { Portrait } from "@/components/graphics/Portrait";
-import { VehicleArt } from "@/components/graphics/VehicleArt";
+import { TruckSpec } from "@/components/graphics/TruckSpec";
+import { vehicle } from "@/content/vehicles";
 import { leader } from "@/content/leadership";
 
 /** Shared three-generation story used on Home (compact) and Our Legacy (full). */
@@ -22,7 +23,7 @@ export function LegacyChapters({ full = false }: { full?: boolean }) {
         <div className="relative flex flex-col items-center">
           <Portrait src={d.photo} alt={d.photoAlt!} initials={d.initials} size="lg" objectPosition="52% 28%" />
           <div className="relative -mt-6 w-72 sm:w-80">
-            <VehicleArt art="truck6" uid="green-truck" accent="green" className="w-full" />
+            <TruckSpec v={vehicle("icv-19ft")} bare animate={false} tint="#5aa469" className="w-full" />
             <p className="text-center text-[0.65rem] uppercase tracking-[0.25em] text-slate-500">
               Illustration · the first green truck
             </p>

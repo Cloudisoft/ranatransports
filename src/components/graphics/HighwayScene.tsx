@@ -1,4 +1,5 @@
-import { VehicleArt } from "./VehicleArt";
+import { TruckSpec } from "./TruckSpec";
+import { vehicle } from "@/content/vehicles";
 
 /**
  * Layered highway: sunset skyline with port cranes, neon-edged multi-lane road
@@ -7,7 +8,7 @@ import { VehicleArt } from "./VehicleArt";
  */
 export function HighwayScene({ className = "", dense = true }: { className?: string; dense?: boolean }) {
   return (
-    <div className={`pointer-events-none relative overflow-hidden ${className}`} aria-hidden="true">
+    <div data-anim-scope className={`drive-wheels pointer-events-none relative overflow-hidden ${className}`} aria-hidden="true">
       {/* skyline */}
       <svg viewBox="0 0 1600 200" preserveAspectRatio="xMidYMax slice" className="absolute inset-x-0 bottom-[38%] h-[46%] w-full">
         <defs>
@@ -67,21 +68,21 @@ export function HighwayScene({ className = "", dense = true }: { className?: str
       </svg>
 
       {/* far lane — oncoming */}
-      <div className="absolute bottom-[25%] left-0 w-[22vw] min-w-[150px] max-w-[300px] animate-drive-rev opacity-70 motion-reduce:animate-none" style={{ animationDelay: "-6s" }}>
-        <VehicleArt art="container" uid="hw-a" className="w-full" flip />
+      <div className="absolute bottom-[24%] left-0 w-[22vw] min-w-[150px] max-w-[300px] animate-drive-rev opacity-70 motion-reduce:animate-none" style={{ animationDelay: "-6s" }}>
+        <TruckSpec v={vehicle("container-32ft")} bare flip animate={false} tint="#dfe5ee" className="w-full" />
       </div>
       {dense && (
-        <div className="absolute bottom-[25%] left-0 w-[14vw] min-w-[110px] max-w-[200px] animate-drive-rev opacity-60 motion-reduce:hidden" style={{ animationDelay: "-14s", animationDuration: "21s" }}>
-          <VehicleArt art="truck6" uid="hw-b" className="w-full" flip />
+        <div className="absolute bottom-[24%] left-0 w-[14vw] min-w-[110px] max-w-[200px] animate-drive-rev opacity-60 motion-reduce:hidden" style={{ animationDelay: "-14s", animationDuration: "21s" }}>
+          <TruckSpec v={vehicle("truck-10w")} bare flip animate={false} tint="#dfe5ee" className="w-full" />
         </div>
       )}
       {/* near lane */}
-      <div className="absolute bottom-[1%] left-0 w-[34vw] min-w-[220px] max-w-[460px] animate-drive motion-reduce:animate-none motion-reduce:left-[8%]">
-        <VehicleArt art="container" uid="hw-c" className="w-full drop-shadow-[0_0_30px_rgba(29,179,255,0.35)]" />
+      <div className="absolute -bottom-[2%] left-0 w-[34vw] min-w-[220px] max-w-[460px] animate-drive motion-reduce:animate-none motion-reduce:left-[8%]">
+        <TruckSpec v={vehicle("container-20ft")} bare animate={false} className="w-full drop-shadow-[0_0_30px_rgba(29,179,255,0.35)]" />
       </div>
       {dense && (
-        <div className="absolute bottom-[3%] left-0 w-[22vw] min-w-[150px] max-w-[300px] animate-drive motion-reduce:hidden" style={{ animationDelay: "-8s", animationDuration: "11s" }}>
-          <VehicleArt art="dumper" axles={3} uid="hw-d" className="w-full" />
+        <div className="absolute -bottom-[1%] left-0 w-[22vw] min-w-[150px] max-w-[300px] animate-drive motion-reduce:hidden" style={{ animationDelay: "-8s", animationDuration: "11s" }}>
+          <TruckSpec v={vehicle("tipper-10w")} bare animate={false} className="w-full" />
         </div>
       )}
     </div>

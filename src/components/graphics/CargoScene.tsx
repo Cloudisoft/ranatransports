@@ -1,92 +1,90 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
-import { VehicleArt } from "./VehicleArt";
+import { useRef } from "react";
+import { motion, useInView, useReducedMotion } from "motion/react";
+import { TruckSpec } from "./TruckSpec";
+import { vehicle } from "@/content/vehicles";
 
-function Crate({ color = "#d5ae62", label }: { color?: string; label?: string }) {
+function Crate({ color, label }: { color: string; label?: string }) {
   return (
-    <svg viewBox="0 0 40 40" className="size-full" aria-hidden>
+    <svg viewBox="0 0 40 40" className="size-full drop-shadow-[0_6px_10px_rgba(0,0,0,0.45)]" aria-hidden>
       <rect x="1" y="1" width="38" height="38" rx="3" fill={color} />
-      <rect x="1" y="1" width="38" height="38" rx="3" fill="url(#crate-shade)" />
-      <path d="M1 14h38M1 26h38" stroke="#000" strokeOpacity="0.18" strokeWidth="2" />
-      <rect x="15" y="1" width="10" height="38" fill="#fff" opacity="0.18" />
+      <path d="M1 13h38M1 27h38" stroke="#000" strokeOpacity="0.2" strokeWidth="1.5" />
+      <rect x="16" y="1" width="8" height="38" fill="#fff" opacity="0.22" />
+      <rect x="1" y="1" width="38" height="38" rx="3" fill="none" stroke="#000" strokeOpacity="0.25" />
       {label && (
-        <text x="20" y="24" textAnchor="middle" fontSize="7" fontWeight="700" fill="#05070d" opacity="0.7">
+        <text x="20" y="23.5" textAnchor="middle" fontSize="7" fontWeight="800" fill="#05070d" opacity="0.65" fontFamily="Inter Variable, sans-serif">
           {label}
         </text>
       )}
-      <defs>
-        <linearGradient id="crate-shade" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#fff" stopOpacity="0.25" />
-          <stop offset="1" stopColor="#000" stopOpacity="0.3" />
-        </linearGradient>
-      </defs>
     </svg>
   );
 }
 
-const crates = [
+const CRATES = [
   { color: "#d5ae62", label: "RTL" },
   { color: "#ff7a2f" },
   { color: "#cc2dd3" },
   { color: "#1db3ff", label: "RTL" },
 ];
 
+const CYCLE = 9;
+
 /**
- * Loading-bay loop: crates travel along a conveyor ramp into a truck, which
- * then departs and returns empty — a compact cargo loading / unloading story.
+ * Loading-bay loop. Coordinates are percentages of the stage:
+ * crates leave the bay door, travel the conveyor and land inside the
+ * truck's container; the truck then departs and a fresh one reverses in.
  */
 export function CargoScene({ className = "" }: { className?: string }) {
   const reduce = useReducedMotion();
-  const cycle = 8;
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { margin: "100px 0px" });
+  const v = vehicle("lcv-14ft");
   return (
-    <div className={`relative aspect-[16/9] w-full overflow-hidden rounded-3xl bg-gradient-to-b from-navy to-midnight ${className}`} aria-hidden>
-      <div className="grid-bg absolute inset-0 opacity-60" />
-      {/* warehouse wall + bay door */}
-      <div className="absolute bottom-[18%] left-[4%] h-[62%] w-[34%] rounded-t-xl border border-white/10 bg-graphite/80">
-        <div className="absolute inset-x-[12%] bottom-0 h-[70%] rounded-t-md border border-white/10 bg-[repeating-linear-gradient(0deg,#0b111d_0_6px,#141c2b_6px_12px)]" />
-        <div className="absolute left-[12%] top-[8%] text-[0.55rem] font-bold tracking-[0.3em] text-gold sm:text-xs">BAY 01</div>
-        <div className="absolute right-[10%] top-[9%] size-2 rounded-full bg-[#25c26a] shadow-[0_0_12px_#25c26a]" />
+    <div ref={ref} data-anim-scope className={`relative aspect-[16/10] w-full overflow-hidden rounded-[28px] border border-white/[0.07] bg-[linear-gradient(180deg,#0b1424,#05070d)] ${className}`} aria-hidden>
+      <div className="grid-bg absolute inset-0 opacity-50" />
+      {/* warehouse */}
+      <div className="absolute bottom-[16%] left-[3%] h-[60%] w-[30%] rounded-t-2xl border border-white/10 bg-graphite/70">
+        <div className="absolute inset-x-[14%] bottom-0 h-[68%] rounded-t-md border border-white/10 bg-[repeating-linear-gradient(0deg,#0b111d_0_5px,#162034_5px_10px)]" />
+        <span className="absolute left-[14%] top-[9%] text-[0.55rem] font-bold tracking-[0.3em] text-gold sm:text-[0.7rem]">BAY 01</span>
+        <span className="absolute right-[10%] top-[10%] size-2 rounded-full bg-[#25c26a] shadow-[0_0_12px_#25c26a] motion-safe:animate-pulse" />
       </div>
-      {/* floor */}
-      <div className="absolute inset-x-0 bottom-0 h-[18%] border-t border-white/10 bg-[#070b14]" />
-      <div className="absolute inset-x-0 bottom-[9%] h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
-      {/* conveyor */}
-      <div className="absolute bottom-[18%] left-[30%] h-[3%] w-[24%] origin-left -rotate-[8deg] rounded-full bg-[repeating-linear-gradient(90deg,#2a3446_0_8px,#1b2230_8px_16px)]" />
+      {/* floor + conveyor */}
+      <div className="absolute inset-x-0 bottom-0 h-[16%] border-t border-white/10 bg-[#070b14]" />
+      <div className="absolute bottom-[16%] left-[33%] h-[2.2%] w-[14%] rounded-full bg-[repeating-linear-gradient(90deg,#33405a_0_6px,#1b2230_6px_12px)]" />
 
-      {/* crates moving into truck */}
-      {crates.map((c, i) => (
+      {/* truck (rear faces the bay) */}
+      <motion.div
+        className="absolute bottom-[7%] left-[44%] w-[58%] will-change-transform"
+        initial={false}
+        animate={reduce || !inView ? { x: 0 } : { x: ["0%", "0%", "120%", "120%", "-10%", "0%"] }}
+        transition={reduce || !inView ? { duration: 0 } : { duration: CYCLE, times: [0, 0.62, 0.78, 0.8, 0.95, 1], repeat: Infinity, ease: "easeInOut" }}
+      >
+        <TruckSpec v={v} bare animate={false} className="w-full" />
+      </motion.div>
+
+      {/* crates — transform-only animation (x is % of the full-width track) */}
+      {CRATES.map((c, i) => (
         <motion.div
           key={i}
-          className="absolute bottom-[19%] left-[22%] w-[7%]"
+          className="absolute inset-x-0 will-change-transform"
+          style={{ bottom: "17.5%" }}
           initial={false}
           animate={
-            reduce
-              ? { x: `${i * 110}%` }
-              : {
-                  x: ["0%", "0%", "430%", "430%", "430%"],
-                  y: ["0%", "0%", "-60%", "-60%", "-60%"],
-                  opacity: [0, 1, 1, 0, 0],
-                }
+            reduce || !inView
+              ? { x: `${34 + i * 3}%`, opacity: reduce ? 1 : 0 }
+              : { x: ["24%", "24%", "46%", "50%", "50%"], opacity: [0, 1, 1, 0, 0] }
           }
-          transition={reduce ? undefined : { duration: cycle, times: [0, 0.08 + i * 0.08, 0.3 + i * 0.08, 0.36 + i * 0.08, 1], repeat: Infinity, ease: "easeInOut" }}
+          transition={reduce || !inView ? { duration: 0 } : { duration: CYCLE, times: [0, 0.04 + i * 0.1, 0.2 + i * 0.1, 0.26 + i * 0.1, 1], repeat: Infinity, ease: "easeInOut" }}
         >
-          <Crate {...c} />
+          <div className="w-[6%]">
+            <Crate {...c} />
+          </div>
         </motion.div>
       ))}
 
-      {/* truck drives away loaded and returns */}
-      <motion.div
-        className="absolute bottom-[6%] left-[50%] w-[48%]"
-        initial={false}
-        animate={reduce ? { x: 0 } : { x: ["0%", "0%", "140%", "-160%", "0%"] }}
-        transition={reduce ? undefined : { duration: cycle, times: [0, 0.68, 0.82, 0.83, 1], repeat: Infinity, ease: "easeInOut" }}
-      >
-        <VehicleArt art="lcv" uid="cargo-truck" className="w-full" />
-      </motion.div>
-
-      <div className="absolute right-4 top-4 rounded-full border border-white/10 bg-midnight/70 px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-sky sm:text-xs">
-        Loading · Dispatch · Delivery
+      <div className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-midnight/70 px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-slate-300 sm:text-xs">
+        <span className="size-1.5 rounded-full bg-sky motion-safe:animate-pulse" /> Loading · Dispatch · Delivery
       </div>
     </div>
   );

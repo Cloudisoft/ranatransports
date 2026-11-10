@@ -20,7 +20,6 @@ export function BrandFilm() {
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 0.86]);
-  const radius = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 36]);
   const opacity = useTransform(scrollYProgress, [0, 0.9], [1, reduce ? 1 : 0.2]);
 
   useEffect(() => {
@@ -53,7 +52,7 @@ export function BrandFilm() {
 
   return (
     <section ref={ref} aria-label="Rana brand film" className="relative h-[min(100vw,78svh)] bg-black sm:h-[100svh] sm:min-h-[460px]">
-      <motion.div style={{ scale, borderRadius: radius, opacity }} className="sticky top-0 h-full w-full overflow-hidden">
+      <motion.div style={{ scale, opacity }} className="h-full w-full overflow-hidden will-change-transform">
         <video
           ref={video}
           className="absolute inset-0 size-full object-cover"

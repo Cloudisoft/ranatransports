@@ -4,7 +4,8 @@ import { VehicleShowcase } from "@/components/sections/VehicleShowcase";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { VehicleArt } from "@/components/graphics/VehicleArt";
+import { TruckSpec } from "@/components/graphics/TruckSpec";
+import { vehicle } from "@/content/vehicles";
 
 export const metadata: Metadata = {
   title: "Vehicles & Load Capacities",
@@ -20,15 +21,19 @@ export default function VehiclesPage() {
         eyebrow="Vehicles & Load Capacities"
         title={
           <>
-            From small commercial loads <span className="text-gradient">to heavy transportation.</span>
+            From small commercial loads <span className="text-slate-500">to heavy transportation.</span>
           </>
         }
         subtitle="Different loads. Different requirements. The right vehicle matters."
         visual={
           <div className="relative aspect-[4/3]">
             <div className="absolute inset-0 rounded-full bg-orchid/20 blur-3xl" aria-hidden />
-            <VehicleArt art="truck12" uid="hero-12" className="absolute inset-x-0 top-[6%] w-full animate-float" />
-            <VehicleArt art="dumper" axles={3} uid="hero-dump" className="absolute bottom-0 left-[10%] w-[70%] [&_.dumper-tub]:animate-[tip_6s_ease-in-out_infinite]" />
+            <div className="spec-paper absolute inset-x-0 top-0 rounded-[24px] p-2 shadow-[0_40px_80px_-40px_rgba(29,179,255,0.5)] motion-safe:animate-float">
+              <TruckSpec v={vehicle("truck-12w")} className="block h-auto w-full" />
+            </div>
+            <div className="spec-paper auto-tip absolute -bottom-4 right-[-4%] w-[58%] rounded-[20px] p-1.5 shadow-2xl ring-1 ring-white/10">
+              <TruckSpec v={vehicle("tipper-10w")} className="block h-auto w-full" />
+            </div>
           </div>
         }
       >
@@ -56,9 +61,13 @@ export default function VehiclesPage() {
               </>
             }
           />
-          <Reveal className="relative aspect-[16/10] overflow-hidden rounded-3xl border border-white/10 bg-[radial-gradient(ellipse_at_50%_100%,#3a2a12,#0b111d_55%,#05070d)]">
-            <div className="absolute inset-x-0 bottom-[10%] h-[12%] bg-[linear-gradient(180deg,#5a4526,#2a1f10)] [clip-path:polygon(0_40%,20%_0,45%_30%,70%_5%,100%_35%,100%_100%,0_100%)] opacity-70" />
-            <VehicleArt art="dumper" axles={4} uid="dumper-feature" className="absolute inset-x-[6%] bottom-[6%] w-[88%] [&_.dumper-tub]:animate-[tip_5s_ease-in-out_infinite] motion-reduce:[&_.dumper-tub]:animate-none" />
+          <Reveal className="overflow-hidden rounded-[28px] border border-white/[0.07] bg-[#0b111c] p-2">
+            <div className="spec-paper auto-tip rounded-[22px]">
+              <TruckSpec v={vehicle("tipper-12w")} className="block h-auto w-full" />
+            </div>
+            <p className="px-4 py-3 text-sm text-slate-400">
+              12 Wheeler Tipper · body ≈ 18 m³ · typical payload 20–25 t, subject to material density and permitted GVW.
+            </p>
           </Reveal>
         </div>
       </section>

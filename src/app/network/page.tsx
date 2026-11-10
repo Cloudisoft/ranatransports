@@ -21,7 +21,7 @@ export default function NetworkPage() {
         eyebrow="Network & DMIC"
         title={
           <>
-            Connecting <span className="text-gradient">commercial destinations.</span>
+            Connecting <span className="text-slate-500">commercial destinations.</span>
           </>
         }
         subtitle="Rooted in Gujarat. Focused on major Indian business corridors."
@@ -45,7 +45,7 @@ export default function NetworkPage() {
           <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {REGIONS.map((r, i) => (
               <Reveal as="li" key={r.id} delay={i * 0.06} className="glass rounded-3xl p-6">
-                <p className="font-display text-3xl font-bold text-gradient">{String(i + 1).padStart(2, "0")}</p>
+                <p className="font-display text-3xl font-bold text-slate-600">{String(i + 1).padStart(2, "0")}</p>
                 <h3 className="mt-3 font-heading text-lg font-bold uppercase text-white">{r.name}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-slate-400">{r.body}</p>
               </Reveal>
@@ -68,7 +68,7 @@ export default function NetworkPage() {
             eyebrow="Delhi–Mumbai Industrial Corridor"
             title={
               <>
-                Connecting industry. <span className="text-gradient">Moving India forward.</span>
+                Connecting industry. <span className="text-slate-500">Moving India forward.</span>
               </>
             }
           />

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Rana service video composition</title>
+<style>
+  @font-face { font-family: "SG"; src: url("../node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 300 700; }
+  @font-face { font-family: "MR"; src: url("../node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2") format("woff2"); font-weight: 200 800; }
+  @font-face { font-family: "IN"; src: url("../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; }
+  /* Fonts registered under the names the extracted SVG artwork uses */
+  @font-face { font-family: "Space Grotesk Variable"; src: url("../node_modules/@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 300 700; }
+  @font-face { font-family: "Inter Variable"; src: url("../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1280px; height: 720px; overflow: hidden; background: #05070d; }
+  #stage { position: relative; width: 1280px; height: 720px; overflow: hidden; color: #fff; font-family: IN, sans-serif;
+    background: radial-gradient(ellipse 70% 60% at 75% 40%, rgba(204,45,211,.16), transparent 60%),
+                radial-gradient(ellipse 60% 55% at 10% 95%, rgba(29,179,255,.14), transparent 60%), #05070d; }
+  .abs { position: absolute; }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(29,179,255,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(29,179,255,.055) 1px, transparent 1px); background-size: 48px 48px; }
+  .display { font-family: SG, sans-serif; font-weight: 700; letter-spacing: -.02em; text-transform: uppercase; line-height: .95; }
+  .eyebrow { font-family: IN; font-weight: 600; font-size: 14px; letter-spacing: .28em; text-transform: uppercase; color: #1db3ff; display: flex; align-items: center; gap: 12px; }
+  .eyebrow::before { content: ""; width: 34px; height: 1.5px; background: linear-gradient(90deg,#ffb547,#fc1f86,#cc2dd3,#1db3ff); }
+  .grad { background: linear-gradient(100deg,#ffb547,#ff7a2f 18%,#fc1f86 42%,#cc2dd3 62%,#5b4cf0 80%,#1db3ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .muted { color: #8792a6; }
+  .word { display: inline-block; will-change: transform, opacity; }
+  .card { border-radius: 22px; border: 1px solid rgba(255,255,255,.09); background: linear-gradient(180deg, rgba(23,32,46,.92), rgba(9,15,27,.92)); box-shadow: 0 30px 60px -30px rgba(0,0,0,.9); }
+  .paper { border-radius: 18px; background-color: #f3f5f9; background-image: radial-gradient(rgba(27,33,48,.09) 1px, transparent 1px); background-size: 14px 14px; }
+  .pill { display: inline-flex; align-items: center; gap: 8px; border-radius: 10px; background: #e8f1ff; color: #0b1b33; font-weight: 700; padding: 6px 12px; font-size: 18px; }
+  .bar { height: 3px; background: linear-gradient(90deg,#ffb547,#fc1f86,#cc2dd3,#1db3ff); }
+  .caption { left: 50%; bottom: 46px; transform: translateX(-50%); max-width: 1000px; text-align: center; font-family: MR; font-weight: 600; font-size: 22px; line-height: 1.35; color: #e8ecf4; padding: 10px 22px; border-radius: 14px; background: rgba(5,7,13,.72); border: 1px solid rgba(255,255,255,.07); white-space: nowrap; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<div id="stage"><div class="grid"></div></div>
+<script src="videos.js"></script>
+</body>
+</html>

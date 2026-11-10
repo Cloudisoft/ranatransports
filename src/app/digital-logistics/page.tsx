@@ -40,7 +40,7 @@ export default function DigitalPage() {
         eyebrow="Digital Logistics"
         title={
           <>
-            Traditional experience. <span className="text-gradient">Modern possibilities.</span>
+            Traditional experience. <span className="text-slate-500">Modern possibilities.</span>
           </>
         }
       >

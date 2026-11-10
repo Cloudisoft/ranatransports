@@ -6,10 +6,10 @@ import { QuoteProcess } from "@/components/sections/QuoteProcess";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { Icon } from "@/components/ui/Icon";
-import { VehicleArt } from "@/components/graphics/VehicleArt";
+import { TruckSpec } from "@/components/graphics/TruckSpec";
+import { formatCapacity, vehicle } from "@/content/vehicles";
 import { CargoScene } from "@/components/graphics/CargoScene";
 import { HighwayScene } from "@/components/graphics/HighwayScene";
-import { NetworkLines } from "@/components/graphics/NetworkLines";
 import { APPROVED_SERVICES, type Service } from "@/content/services";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services" },
 };
 
-function ServiceVisual({ s, i }: { s: Service; i: number }) {
+function ServiceVisual({ s }: { s: Service }) {
   const frame = "relative aspect-[16/10] overflow-hidden rounded-3xl border border-white/10 bg-[radial-gradient(ellipse_at_50%_100%,#13284a,#071426_55%,#05070d)]";
   switch (s.visual) {
     case "highway":
@@ -30,36 +30,35 @@ function ServiceVisual({ s, i }: { s: Service; i: number }) {
       );
     case "boxes":
       return <CargoScene />;
-    case "network":
-    case "longhaul":
-      return (
-        <div className={frame}>
-          <NetworkLines className="absolute inset-0 size-full" />
-          <VehicleArt art={s.visual === "longhaul" ? "container" : "truck10"} uid={`svc-${s.slug}`} className="absolute inset-x-[8%] bottom-[6%] w-[84%]" />
-        </div>
-      );
     default: {
-      const art = ({ industrial: "truck12", heavy: "truck12", dumper: "dumper", corporate: "container", fleet: "lcv", ftl: "truck10" } as const)[
-        s.visual as "industrial" | "heavy" | "dumper" | "corporate" | "fleet" | "ftl"
-      ];
+      const v = vehicle(SERVICE_VEHICLE[s.visual] ?? "truck-10w");
       return (
-        <div className={`${frame} group`}>
-          <div className="grid-bg absolute inset-0 opacity-60" />
-          <div className="absolute inset-x-0 bottom-[12%] h-px bg-gradient-to-r from-transparent via-magenta/60 to-transparent" />
-          <VehicleArt
-            art={art}
-            axles={s.visual === "dumper" ? 4 : undefined}
-            uid={`svc-${s.slug}-${i}`}
-            className="absolute inset-x-[8%] bottom-[8%] w-[84%] [&_.dumper-tub]:animate-[tip_5s_ease-in-out_infinite] motion-reduce:[&_.dumper-tub]:animate-none"
-          />
-          {s.visual === "fleet" && (
-            <VehicleArt art="truck6" uid={`svc-fleet-b`} className="absolute left-[4%] top-[10%] w-[44%] opacity-40" />
-          )}
+        <div className="group overflow-hidden rounded-[28px] border border-white/[0.07] bg-[#0b111c] p-2">
+          <div className="spec-paper rounded-[22px]">
+            <TruckSpec v={v} className="block h-auto w-full" />
+          </div>
+          <div className="flex items-center justify-between gap-3 px-4 py-3 text-sm">
+            <span className="text-slate-400">
+              Typical vehicle: <span className="font-semibold text-white">{v.name}</span>
+            </span>
+            <span className="rounded-lg bg-[#e8f1ff] px-2.5 py-1 text-xs font-bold text-[#0b1b33]">{formatCapacity(v.capacityKg)}</span>
+          </div>
         </div>
       );
     }
   }
 }
+
+const SERVICE_VEHICLE: Record<string, string> = {
+  industrial: "truck-12w",
+  network: "lcv-17ft",
+  longhaul: "container-32ft",
+  heavy: "truck-10w",
+  dumper: "tipper-12w",
+  corporate: "container-20ft",
+  fleet: "icv-19ft",
+  ftl: "truck-6w",
+};
 
 export default function ServicesPage() {
   return (
@@ -68,7 +67,7 @@ export default function ServicesPage() {
         eyebrow="Transport & Logistics Services"
         title={
           <>
-            Transport solutions for a <span className="text-gradient">business world in motion.</span>
+            Transport solutions for a <span className="text-slate-500">business world in motion.</span>
           </>
         }
         image="/media/truck-angle.jpg"
@@ -79,7 +78,7 @@ export default function ServicesPage() {
         </p>
       </PageHero>
 
-      <nav aria-label="Services" className="sticky top-[72px] z-30 border-y border-white/5 bg-midnight/85 backdrop-blur-xl">
+      <nav aria-label="Services" className="sticky top-[84px] z-30 border-y border-white/5 bg-midnight/85 backdrop-blur-xl">
         <ul className="container-x flex gap-2 overflow-x-auto py-3">
           {APPROVED_SERVICES.map((s) => (
             <li key={s.slug} className="shrink-0">
@@ -96,7 +95,7 @@ export default function ServicesPage() {
           <section key={s.slug} id={s.slug} className="scroll-mt-36 py-14 sm:py-20">
             <div className="container-x grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
               <Reveal className={i % 2 ? "lg:order-2" : ""}>
-                <ServiceVisual s={s} i={i} />
+                <ServiceVisual s={s} />
               </Reveal>
               <Reveal delay={0.1}>
                 <p className="font-display text-sm font-bold text-sky">{String(i + 1).padStart(2, "0")}</p>

@@ -59,7 +59,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
 }
 body {
@@ -140,7 +139,6 @@ details > summary { list-style: none; }
 details > summary::-webkit-details-marker { display: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
@@ -153,3 +151,55 @@ details > summary::-webkit-details-marker { display: none; }
   55%, 75% { transform: rotate(-18deg); }
   100% { transform: rotate(0deg); }
 }
+
+/* Spec-sheet truck interactions */
+@keyframes wheel-spin { to { transform: rotate(360deg); } }
+.group:hover .wheel-spin, .group:focus-within .wheel-spin { animation: wheel-spin 0.9s linear infinite; }
+.group:hover .truck-drive, .group:focus-within .truck-drive { transform: translateX(6px); }
+.group:hover .tipper-body, .group:focus-within .tipper-body { transform: rotate(-20deg); }
+.spec-paper {
+  background-color: #f3f5f9;
+  background-image: radial-gradient(rgba(27, 33, 48, 0.09) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .truck-drive, .group:hover .tipper-body { transform: none; }
+}
+
+.drive-wheels .wheel-spin { animation: wheel-spin 0.7s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .drive-wheels .wheel-spin { animation: none; } }
+.auto-tip .tipper-body { animation: tip 5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .auto-tip .tipper-body { animation: none; } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* Cursor spotlight on interactive cards */
+.spotlight { position: relative; isolation: isolate; }
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(29, 179, 255, 0.13), rgba(252, 31, 134, 0.06) 40%, transparent 65%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 1;
+}
+.spotlight:hover::after { opacity: 1; }
+@media (hover: none) { .spotlight::after { display: none; } }
+
+/* ── Scroll performance ───────────────────────────────────────────── */
+/* Decorative loops pause while their section is offscreen */
+[data-offscreen], [data-offscreen] *, [data-offscreen] *::before, [data-offscreen] *::after {
+  animation-play-state: paused !important;
+}
+/* Backdrop blur is expensive on phones while scrolling: use solid glass there */
+@media (hover: none), (max-width: 767px) {
+  .glass {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: linear-gradient(180deg, rgba(23, 32, 46, 0.94), rgba(10, 18, 32, 0.94));
+  }
+}
+@keyframes grid-scroll { from { transform: translate3d(0, -70px, 0); } to { transform: translate3d(0, 0, 0); } }
+.orb { will-change: transform; transform: translateZ(0); }

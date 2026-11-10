@@ -23,7 +23,7 @@ export default function ContactPage() {
         eyebrow="Contact & Get a Quote"
         title={
           <>
-            Let&apos;s move your <span className="text-gradient">business forward.</span>
+            Let&apos;s move your <span className="text-slate-500">business forward.</span>
           </>
         }
         subtitle="Have a transportation requirement?"

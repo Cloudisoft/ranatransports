@@ -29,6 +29,8 @@ export function PageHero({
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_80%_0%,rgba(204,45,211,0.22),transparent_50%),radial-gradient(ellipse_at_10%_100%,rgba(29,179,255,0.18),transparent_55%)]" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-midnight/40 via-midnight/70 to-midnight" />
       <NetworkLines className="absolute inset-0 -z-10 size-full opacity-60" />
+      <div className="pointer-events-none absolute -left-24 top-10 -z-10 size-[420px] rounded-full bg-magenta/15 blur-3xl orb max-md:hidden motion-safe:animate-float" aria-hidden />
+      <div className="pointer-events-none absolute -right-24 top-40 -z-10 size-[420px] rounded-full bg-sky/15 blur-3xl orb max-md:hidden motion-safe:animate-float [animation-delay:-3s]" aria-hidden />
       <div className="container-x grid items-center gap-12 lg:grid-cols-[1.3fr_1fr]">
         <div>
           <Eyebrow>{eyebrow}</Eyebrow>

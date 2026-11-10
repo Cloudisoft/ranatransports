@@ -24,7 +24,7 @@ export function HighlightGrid() {
     <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {HIGHLIGHTS.map((h, i) => (
         <Reveal as="li" key={h.title} delay={i * 0.06}>
-          <div className="group glass relative h-full overflow-hidden rounded-3xl p-6 transition duration-500 hover:-translate-y-1 hover:border-white/20 sm:p-7">
+          <div className="spotlight group glass relative h-full overflow-hidden rounded-3xl p-6 transition duration-500 hover:-translate-y-1 hover:border-white/20 sm:p-7">
             <div className="absolute -right-10 -top-10 size-32 rounded-full bg-brand opacity-0 blur-3xl transition duration-500 group-hover:opacity-30" aria-hidden />
             <span className="grid size-12 place-items-center rounded-2xl bg-white/5 ring-1 ring-white/10">
               <Icon name={h.icon} className="size-6 text-sky" />
@@ -46,7 +46,7 @@ export function ServiceGrid({ limit }: { limit?: number }) {
         <Reveal as="li" key={s.slug} delay={(i % 4) * 0.06}>
           <Link
             href={`/services#${s.slug}`}
-            className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-b from-graphite/80 to-navy/60 p-6 transition duration-500 hover:-translate-y-1 hover:border-white/15"
+            className="spotlight group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-b from-graphite/80 to-navy/60 p-6 transition duration-500 hover:-translate-y-1 hover:border-white/15"
           >
             <span className="absolute inset-x-0 top-0 h-px origin-left scale-x-0 bg-brand transition duration-500 group-hover:scale-x-100" aria-hidden />
             <span className="font-display text-xs text-slate-500">{String(i + 1).padStart(2, "0")}</span>
@@ -68,7 +68,7 @@ export function WhyRanaGrid() {
     <ol className="grid gap-px overflow-hidden rounded-3xl border border-white/5 bg-white/5 sm:grid-cols-2 lg:grid-cols-3">
       {WHY_RANA.map((w, i) => (
         <Reveal as="li" key={w.title} delay={(i % 3) * 0.06} className="bg-midnight p-6 sm:p-8">
-          <span className="font-display text-3xl font-bold text-gradient">{String(i + 1).padStart(2, "0")}</span>
+          <span className="font-display text-3xl font-bold text-slate-600">{String(i + 1).padStart(2, "0")}</span>
           <h3 className="mt-3 font-heading text-lg font-bold text-white">{w.title}</h3>
           <p className="mt-2 text-sm leading-relaxed text-slate-400">{w.body}</p>
         </Reveal>
@@ -172,7 +172,7 @@ export function OfficeDirectory() {
     <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {OFFICES.map((o, i) => (
         <Reveal as="li" key={o.id} delay={(i % 3) * 0.06}>
-          <article className={`glass relative h-full rounded-3xl p-6 ${o.isHQ ? "ring-1 ring-gold/40" : ""}`}>
+          <article className={`spotlight glass relative h-full rounded-3xl p-6 ${o.isHQ ? "ring-1 ring-gold/40" : ""}`}>
             <p className={`text-xs font-semibold uppercase tracking-[0.22em] ${o.isHQ ? "text-gold" : "text-sky"}`}>
               {o.isHQ ? "Historical Headquarters" : o.city}
             </p>

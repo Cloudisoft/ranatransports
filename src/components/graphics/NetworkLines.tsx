@@ -7,7 +7,7 @@ export function NetworkLines({ className = "" }: { className?: string }) {
     [0, 1], [1, 2], [1, 3], [2, 4], [3, 4], [3, 5], [4, 6], [5, 6], [2, 7], [7, 6], [0, 8], [8, 7],
   ];
   return (
-    <svg viewBox="0 0 1440 640" preserveAspectRatio="xMidYMid slice" className={`pointer-events-none ${className}`} aria-hidden>
+    <svg data-anim-scope viewBox="0 0 1440 640" preserveAspectRatio="xMidYMid slice" className={`pointer-events-none ${className}`} aria-hidden>
       <defs>
         <linearGradient id="nl-grad" x1="0" y1="0" x2="1" y2="0">
           <stop offset="0" stopColor="#ffb547" />
@@ -25,15 +25,17 @@ export function NetworkLines({ className = "" }: { className?: string }) {
         return (
           <g key={i}>
             <path d={d} fill="none" stroke="url(#nl-grad)" strokeOpacity="0.22" strokeWidth="1.2" />
+            {i % 3 === 0 && (
             <path
               d={d}
               fill="none"
               stroke="url(#nl-grad)"
               strokeWidth="2"
               strokeDasharray="14 400"
-              className="animate-road"
+              className="animate-road max-md:hidden"
               style={{ animationDuration: `${2 + (i % 4)}s`, animationDirection: i % 2 ? "reverse" : "normal" }}
             />
+            )}
           </g>
         );
       })}

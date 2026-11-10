@@ -25,12 +25,34 @@ import {
   WhyRanaGrid,
 } from "@/components/sections/Blocks";
 import { SITE, STRENGTHS } from "@/content/site";
+import { VEHICLES, formatCapacity } from "@/content/vehicles";
+import { Marquee } from "@/components/ui/Marquee";
+import { ServiceVideos } from "@/components/sections/ServiceVideos";
 
 export default function HomePage() {
   return (
     <>
       <BrandFilm />
       <Hero />
+
+      <section aria-label="Vehicle classes and business corridors" className="border-b border-white/5 bg-[#070a12] py-5">
+        <Marquee
+          speed={55}
+          items={[
+            ...VEHICLES.map((v) => (
+              <span key={v.id} className="inline-flex items-baseline gap-2.5 font-display text-lg font-semibold uppercase tracking-wide text-slate-300">
+                {v.name}
+                <span className="font-sans text-xs font-semibold normal-case tracking-normal text-slate-500">{formatCapacity(v.capacityKg)}</span>
+              </span>
+            )),
+            ...["Nadiad", "Ahmedabad", "Petlad", "Mumbai", "New Delhi"].map((c) => (
+              <span key={c} className="font-display text-lg font-semibold uppercase tracking-wide text-gold">
+                {c}
+              </span>
+            )),
+          ]}
+        />
+      </section>
 
       {/* Introducing Rana + Our Strength */}
       <section className="relative overflow-hidden py-24 sm:py-32">
@@ -41,7 +63,7 @@ export default function HomePage() {
               eyebrow="Introducing Rana"
               title={
                 <>
-                  Transportation <span className="text-gradient">built on relationships.</span>
+                  Transportation <span className="text-slate-500">built on relationships.</span>
                 </>
               }
               lead={
@@ -104,7 +126,7 @@ export default function HomePage() {
               eyebrow="Our capabilities"
               title={
                 <>
-                  From everyday business cargo <span className="text-gradient">to heavy commercial loads.</span>
+                  From everyday business cargo <span className="text-slate-500">to heavy commercial loads.</span>
                 </>
               }
             />
@@ -119,6 +141,24 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Service explainer videos */}
+      <section id="services-in-motion" className="scroll-mt-24 py-20 sm:py-28">
+        <div className="container-x">
+          <SectionHeading
+            eyebrow="Services in motion"
+            title={
+              <>
+                Our services in <span className="text-slate-500">under 30 seconds.</span>
+              </>
+            }
+            lead="Three short films: road freight, heavy vehicles and bulk, and corporate logistics with our quotation process."
+          />
+          <div className="mt-12">
+            <ServiceVideos />
+          </div>
+        </div>
+      </section>
+
       {/* Vehicles */}
       <section className="relative overflow-hidden bg-gradient-to-b from-midnight via-navy/60 to-midnight py-20 sm:py-28">
         <div className="container-x">
@@ -127,7 +167,7 @@ export default function HomePage() {
               eyebrow="Vehicle options"
               title={
                 <>
-                  The right vehicle <span className="text-gradient">for the right load.</span>
+                  The right vehicle <span className="text-slate-500">for the right load.</span>
                 </>
               }
               lead="Whether your business requires a smaller commercial vehicle, a larger cargo truck or a heavy-duty dumper, our team can help review the transport options suitable for your requirements."
@@ -174,7 +214,7 @@ export default function HomePage() {
             eyebrow="Why Rana"
             title={
               <>
-                More than a truck booking. <span className="text-gradient">A transport partner that understands business.</span>
+                More than a truck booking. <span className="text-slate-500">A transport partner that understands business.</span>
               </>
             }
           />
@@ -194,7 +234,7 @@ export default function HomePage() {
             eyebrow="Strategic connectivity"
             title={
               <>
-                Rooted in Gujarat. <span className="text-gradient">Focused on India&apos;s industrial future.</span>
+                Rooted in Gujarat. <span className="text-slate-500">Focused on India&apos;s industrial future.</span>
               </>
             }
             lead="Our transportation heritage began in Nadiad, Gujarat. Today our strategic business focus includes the commercial connectivity between Ahmedabad, Mumbai, Delhi and other important Indian destinations — including the growing Delhi–Mumbai Industrial Corridor."
@@ -249,7 +289,7 @@ export default function HomePage() {
             eyebrow="Get a transport quote"
             title={
               <>
-                Share your requirement. <span className="text-gradient">We&apos;ll review the options.</span>
+                Share your requirement. <span className="text-slate-500">We&apos;ll review the options.</span>
               </>
             }
           />

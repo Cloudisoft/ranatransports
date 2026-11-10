@@ -73,18 +73,18 @@ export function IndiaMap({ compact = false, initialView = "dmic" }: { compact?: 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
       <div className="relative">
-        <div role="tablist" aria-label="Map region" className="mb-4 flex flex-wrap gap-2">
+        <div role="group" aria-label="Map region" className="mb-4 flex flex-wrap gap-2">
           {VIEWS.map((v) => (
             <button
               key={v.id}
-              role="tab"
-              aria-selected={view === v.id}
+              type="button"
+              aria-pressed={view === v.id}
               onClick={() => {
                 setView(v.id);
                 setActive(null);
               }}
               className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold tracking-wide transition ${
-                view === v.id ? "border-transparent bg-brand text-white" : "border-white/10 bg-white/5 text-slate-300 hover:text-white"
+                view === v.id ? "border-white bg-white text-midnight" : "border-white/10 bg-white/5 text-slate-300 hover:text-white"
               }`}
             >
               {v.label}
