@@ -11,7 +11,11 @@ function getPool() {
     pool = new Pool({
       connectionString: process.env.DATABASE_URL,
       max: 3,
-      ssl: process.env.DATABASE_SSL === "disable" ? false : process.env.DATABASE_URL?.includes("localhost") ? false : { rejectUnauthorized: false },
+      // Railway's private network (*.railway.internal) and localhost don't use TLS
+      ssl:
+        process.env.DATABASE_SSL === "disable" || /localhost|\.railway\.internal/.test(process.env.DATABASE_URL ?? "")
+          ? false
+          : { rejectUnauthorized: false },
     });
   }
   return pool;
@@ -49,10 +53,25 @@ CREATE TABLE IF NOT EXISTS enquiries (
 CREATE INDEX IF NOT EXISTS enquiries_created_at_idx ON enquiries (created_at DESC);
 `;
 
+let ready: Promise<unknown> | null = null;
+/** Creates the enquiries table on first use (idempotent), so no manual migration is needed. */
+function ensureTable() {
+  if (!ready) {
+    ready = getPool()
+      .query(CREATE_TABLE_SQL)
+      .catch((err) => {
+        ready = null;
+        throw err;
+      });
+  }
+  return ready;
+}
+
 export async function saveEnquiry(
   e: Enquiry,
   meta: { reference: string; consentText: string; sourcePath?: string; ipHash?: string; userAgent?: string },
 ) {
+  await ensureTable();
   await getPool().query(
     `INSERT INTO enquiries (reference, full_name, phone, email, company, requirement, cargo, weight, weight_unit,
       loading_location, unloading_location, budget_inr, loading_date, preferred_vehicle, service, details,
