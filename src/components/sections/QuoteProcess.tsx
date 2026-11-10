@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReduceMotion } from "@/lib/motion-pref";
 import { QUOTE_STEPS } from "@/content/site";
 import { Icon } from "@/components/ui/Icon";
 
@@ -8,7 +9,7 @@ const icons = ["quote", "truck", "briefcase", "route"];
 
 /** Animated four-step quotation process with a travelling progress line. */
 export function QuoteProcess() {
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   return (
     <div className="relative">
       <div className="absolute left-6 top-6 h-[calc(100%-3rem)] w-px bg-white/10 md:left-0 md:top-7 md:h-px md:w-full" aria-hidden />

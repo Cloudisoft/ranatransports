@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { Icon } from "@/components/ui/Icon";
+import { isMotionPaused } from "@/lib/motion-pref";
 
 const VIDEOS = [
   {
@@ -46,7 +47,7 @@ export function ServiceVideos() {
   useEffect(() => {
     const el = video.current;
     if (!el) return;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = isMotionPaused();
     if (inView && !reduce) el.play().catch(() => {});
     else el.pause();
   }, [inView, active]);

@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useInView } from "motion/react";
+import { useReduceMotion } from "@/lib/motion-pref";
 import { TruckSpec } from "./TruckSpec";
 import { vehicle } from "@/content/vehicles";
 
@@ -36,7 +37,7 @@ const CYCLE = 9;
  * truck's container; the truck then departs and a fresh one reverses in.
  */
 export function CargoScene({ className = "" }: { className?: string }) {
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { margin: "100px 0px" });
   const v = vehicle("lcv-14ft");

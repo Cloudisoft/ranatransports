@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReduceMotion } from "@/lib/motion-pref";
 import type { ReactNode } from "react";
 
 export function Reveal({
@@ -16,7 +17,7 @@ export function Reveal({
   className?: string;
   as?: "div" | "li" | "section" | "article";
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   const M = motion[as];
   return (
     <M

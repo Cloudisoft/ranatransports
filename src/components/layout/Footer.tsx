@@ -2,6 +2,7 @@ import Link from "next/link";
 import { NAV, SITE } from "@/content/site";
 import { Logo } from "@/components/ui/Logo";
 import { Icon } from "@/components/ui/Icon";
+import { MotionToggle } from "@/components/ui/MotionToggle";
 
 export function Footer() {
   return (
@@ -69,6 +70,7 @@ export function Footer() {
         </p>
         <div className="mt-6 flex flex-col items-center justify-between gap-3 text-xs text-slate-500 sm:flex-row">
           <p>© {new Date().getFullYear()} Rana Transport &amp; Logistics. All rights reserved.</p>
+          <MotionToggle />
           <p>
             India map outline: <a className="underline hover:text-slate-300" href="https://github.com/VictorCazanave/svg-maps" target="_blank" rel="noopener noreferrer">svg-maps</a> (CC BY 4.0).
           </p>

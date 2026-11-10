@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { useCalmMotion, useReduceMotion } from "@/lib/motion-pref";
 import { Icon } from "@/components/ui/Icon";
 
 /**
@@ -12,15 +13,16 @@ import { Icon } from "@/components/ui/Icon";
 export function BrandFilm() {
   const ref = useRef<HTMLElement>(null);
   const video = useRef<HTMLVideoElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
+  const calm = useCalmMotion();
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
   const [ended, setEnded] = useState(false);
   const [progress, setProgress] = useState(0);
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const scale = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 0.86]);
-  const opacity = useTransform(scrollYProgress, [0, 0.9], [1, reduce ? 1 : 0.2]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, calm ? 1 : 0.86]);
+  const opacity = useTransform(scrollYProgress, [0, 0.9], [1, calm ? 1 : 0.2]);
 
   useEffect(() => {
     const v = video.current;

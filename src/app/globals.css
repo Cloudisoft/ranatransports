@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* motion-safe / motion-reduce follow the on-site "Pause animations" control (see src/lib/motion-pref.ts) */
+@custom-variant motion-safe (html:not([data-motion="reduced"]) &);
+@custom-variant motion-reduce (html[data-motion="reduced"] &);
+
 @theme {
   /* Core corporate palette */
   --color-midnight: #05070d;
@@ -138,12 +142,9 @@ h3, h4, .font-heading { font-family: var(--font-heading); }
 details > summary { list-style: none; }
 details > summary::-webkit-details-marker { display: none; }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
+html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-motion="reduced"] *::after {
+  animation-play-state: paused !important;
+  transition-duration: 0.001ms !important;
 }
 
 @keyframes tip {
@@ -162,14 +163,12 @@ details > summary::-webkit-details-marker { display: none; }
   background-image: radial-gradient(rgba(27, 33, 48, 0.09) 1px, transparent 1px);
   background-size: 14px 14px;
 }
-@media (prefers-reduced-motion: reduce) {
-  .group:hover .truck-drive, .group:hover .tipper-body { transform: none; }
-}
+html[data-motion="reduced"] .group:hover .truck-drive, html[data-motion="reduced"] .group:hover .tipper-body { transform: none; }
 
 .drive-wheels .wheel-spin { animation: wheel-spin 0.7s linear infinite; }
-@media (prefers-reduced-motion: reduce) { .drive-wheels .wheel-spin { animation: none; } }
+
 .auto-tip .tipper-body { animation: tip 5s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) { .auto-tip .tipper-body { animation: none; } }
+
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* Cursor spotlight on interactive cards */

@@ -10,6 +10,7 @@ import { SpotlightTracker } from "@/components/ui/SpotlightTracker";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import "lenis/dist/lenis.css";
 import { SITE } from "@/content/site";
+import { MOTION_BOOT_SCRIPT } from "@/lib/motion-pref";
 import { OFFICES } from "@/content/offices";
 
 export const metadata: Metadata = {
@@ -86,7 +87,10 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN">
+    <html lang="en-IN" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: MOTION_BOOT_SCRIPT }} />
+      </head>
       <body className="min-h-svh">
         <Header />
         <main id="main">{children}</main>

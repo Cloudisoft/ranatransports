@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { isCalmMotion } from "@/lib/motion-pref";
 
 declare global {
   interface Window {
@@ -16,7 +17,7 @@ declare global {
  * Inertial smooth scrolling for mouse wheels / trackpads (Lenis), driven by
  * GSAP's ticker so ScrollTrigger scrubs and Lenis share one frame loop.
  * Touch devices keep native momentum scrolling (smoothest on phones).
- * Disabled entirely for prefers-reduced-motion.
+ * Disabled when the OS asks for reduced motion or animations are paused on-site.
  *
  * Also pauses CSS animations inside any `[data-anim-scope]` element while it
  * is offscreen, so decorative loops never compete with scrolling.
@@ -26,7 +27,7 @@ export function SmoothScroll() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = isCalmMotion();
 
     let lenis: Lenis | undefined;
     let tick: ((t: number) => void) | undefined;

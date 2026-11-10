@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useReduceMotion } from "@/lib/motion-pref";
 import { FOCUS_STATES } from "@/content/india-map";
 import { OFFICES, REGIONS, mapsDirectionsUrl, type Office } from "@/content/offices";
 import { Icon } from "@/components/ui/Icon";
@@ -53,7 +54,7 @@ const REGION_OF_VIEW: Partial<Record<View, string>> = {
 };
 
 export function IndiaMap({ compact = false, initialView = "dmic" }: { compact?: boolean; initialView?: View }) {
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   const [view, setView] = useState<View>(initialView);
   const [active, setActive] = useState<Office | null>(null);
   const box = VIEWS.find((v) => v.id === view)!.box;

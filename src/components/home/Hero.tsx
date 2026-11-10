@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "motion/react";
+import { motion, useMotionValue, useScroll, useSpring, useTransform, type MotionValue } from "motion/react";
+import { useCalmMotion, useReduceMotion } from "@/lib/motion-pref";
 import { LinkButton } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { HeroScene } from "@/components/three/HeroScene";
@@ -51,10 +52,11 @@ function Chip({
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
+  const calm = useCalmMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const yText = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "30%"]);
-  const fade = useTransform(scrollYProgress, [0, 0.7], [1, reduce ? 1 : 0]);
+  const yText = useTransform(scrollYProgress, [0, 1], ["0%", calm ? "0%" : "30%"]);
+  const fade = useTransform(scrollYProgress, [0, 0.7], [1, calm ? 1 : 0]);
 
   // mouse parallax (cloudisoft-style data-mouse layers)
   const rawX = useMotionValue(0);
@@ -62,14 +64,14 @@ export function Hero() {
   const mx = useSpring(rawX, { stiffness: 60, damping: 18 });
   const my = useSpring(rawY, { stiffness: 60, damping: 18 });
   useEffect(() => {
-    if (reduce) return;
+    if (calm) return;
     const onMove = (e: PointerEvent) => {
       rawX.set(e.clientX / window.innerWidth - 0.5);
       rawY.set(e.clientY / window.innerHeight - 0.5);
     };
     window.addEventListener("pointermove", onMove, { passive: true });
     return () => window.removeEventListener("pointermove", onMove);
-  }, [reduce, rawX, rawY]);
+  }, [calm, rawX, rawY]);
 
   const word = {
     hidden: { opacity: 0, y: "0.5em", filter: "blur(8px)" },

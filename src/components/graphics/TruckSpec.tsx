@@ -1,7 +1,8 @@
 "use client";
 
 import { useId } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReduceMotion } from "@/lib/motion-pref";
 import type { Vehicle } from "@/content/vehicles";
 import { formatFt } from "@/content/vehicles";
 
@@ -57,7 +58,7 @@ export function TruckSpec({
 }) {
   const paint = tint ?? "#fff";
   const uid = `${v.id}-${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   const d = v.drawing;
   const bodyLen = v.lengthFt;
   const cabLen = CAB_LEN[d.cab];

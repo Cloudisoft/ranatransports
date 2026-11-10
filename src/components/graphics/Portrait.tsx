@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { motion, useInView, useReducedMotion } from "motion/react";
+import { motion, useInView } from "motion/react";
+import { useReduceMotion } from "@/lib/motion-pref";
 
 /**
  * Circular portrait with a champagne-gold frame and a circular "iris" reveal.
@@ -25,7 +26,7 @@ export function Portrait({
   objectPosition?: string;
   priority?: boolean;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useReduceMotion();
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "0px 0px -8% 0px" });
   const dims = { sm: "size-24", md: "size-40 sm:size-48", lg: "size-56 sm:size-64", xl: "size-64 sm:size-80" }[size];

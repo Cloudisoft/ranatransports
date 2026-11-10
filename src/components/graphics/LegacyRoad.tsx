@@ -3,6 +3,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { isMotionPaused } from "@/lib/motion-pref";
 
 export type Chapter = {
   id: string;
@@ -86,7 +87,7 @@ export function LegacyRoad({ chapters }: { chapters: Chapter[] }) {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = isMotionPaused();
     const path = measureRef.current!;
     const total = path.getTotalLength();
     const desktopMq = window.matchMedia("(min-width: 768px)");
