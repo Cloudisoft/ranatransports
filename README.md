@@ -64,8 +64,11 @@ All copy and business facts live in `src/content/`:
 ### Brand assets
 
 - `public/brand/` — official logo, cropped emblem, favicons (from the supplied logo).
-- `public/media/rana-brand-film.mp4` — supplied brand film (fast-start remux); poster and hero stills are frames from it;
-  `hero-loop.mp4` is a muted, audio-free 9-second excerpt for the hero background.
+- `public/media/rana-brand-film-1080p*.mp4` — the supplied brand film, AI-enhanced from the 848×478 WhatsApp copy to
+  1080p (Real-ESRGAN general-x4v3 with partial denoise, then Lanczos to 1920×1080). Served as AV1 first with an H.264
+  fallback. `hero-loop-1080p*.mp4` is a muted 9-second excerpt used when a device has no hardware WebGL. Posters and
+  page-hero stills are frames from the enhanced master.
+  If the original full-quality film becomes available, re-encode it in place of these files (same names) for best results.
 - `public/people/` — Dinesh Rana portrait + archive photo, Jalpesh Rana portrait.
 - **Tej Rana**: a gradient "TR" monogram is shown until an approved photo is supplied. Add
   `public/people/tej-rana-portrait.jpg` and set `photo` for Tej in `src/content/leadership.ts`.

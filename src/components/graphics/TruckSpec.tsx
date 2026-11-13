@@ -1,7 +1,7 @@
 "use client";
 
-import { useId } from "react";
-import { motion } from "motion/react";
+import { useId, useRef } from "react";
+import { motion, useInView } from "motion/react";
 import { useReduceMotion } from "@/lib/motion-pref";
 import type { Vehicle } from "@/content/vehicles";
 import { formatFt } from "@/content/vehicles";
@@ -76,6 +76,8 @@ export function TruckSpec({
   const R = d.cabHeightFt;
   const deck = d.deckFt;
   const draw = animate && !reduce;
+  const svgRef = useRef<SVGSVGElement>(null);
+  const inView = useInView(svgRef, { once: true, margin: "0px 0px -12% 0px" });
 
   /* ───────────── cab ───────────── */
   let cab: React.ReactNode;
@@ -229,7 +231,11 @@ export function TruckSpec({
     );
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className={className} role="img" aria-label={`${v.name} side view: cargo length ${formatFt(v.lengthFt)}, ${v.heightRef} height ${formatFt(v.heightFt)}`}>
+    <svg
+      ref={svgRef}
+      viewBox={`0 0 ${W} ${H}`}
+      className={`${className} ${draw && inView ? "drive-in" : ""} ${draw && !inView ? "pre-drive" : ""}`}
+      role="img" aria-label={`${v.name} side view: cargo length ${formatFt(v.lengthFt)}, ${v.heightRef} height ${formatFt(v.heightFt)}`}>
       <defs>
         <linearGradient id={`glass-${uid}`} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#bfe7ff" />

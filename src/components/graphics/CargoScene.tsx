@@ -27,9 +27,11 @@ const CRATES = [
   { color: "#ff7a2f" },
   { color: "#cc2dd3" },
   { color: "#1db3ff", label: "RTL" },
+  { color: "#ffb547" },
 ];
 
-const CYCLE = 9;
+/** seconds: crates load from 0 → ~5.6s, truck departs 5.8–6.9s, next truck reverses in 6.9–8s */
+const CYCLE = 8;
 
 /**
  * Loading-bay loop. Coordinates are percentages of the stage:
@@ -58,8 +60,8 @@ export function CargoScene({ className = "" }: { className?: string }) {
       <motion.div
         className="absolute bottom-[7%] left-[44%] w-[58%] will-change-transform"
         initial={false}
-        animate={reduce || !inView ? { x: 0 } : { x: ["0%", "0%", "120%", "120%", "-10%", "0%"] }}
-        transition={reduce || !inView ? { duration: 0 } : { duration: CYCLE, times: [0, 0.62, 0.78, 0.8, 0.95, 1], repeat: Infinity, ease: "easeInOut" }}
+        animate={reduce || !inView ? { x: 0 } : { x: ["0%", "0%", "120%", "120%", "-6%", "0%"] }}
+        transition={reduce || !inView ? { duration: 0 } : { duration: CYCLE, times: [0, 5.8 / CYCLE, 6.9 / CYCLE, 6.92 / CYCLE, 7.8 / CYCLE, 1], repeat: Infinity, ease: "easeInOut" }}
       >
         <TruckSpec v={v} bare animate={false} className="w-full" />
       </motion.div>
@@ -74,9 +76,18 @@ export function CargoScene({ className = "" }: { className?: string }) {
           animate={
             reduce || !inView
               ? { x: `${34 + i * 3}%`, opacity: reduce ? 1 : 0 }
-              : { x: ["24%", "24%", "46%", "50%", "50%"], opacity: [0, 1, 1, 0, 0] }
+              : { x: ["22%", "22%", "48%", "52%", "52%"], opacity: [0, 1, 1, 0, 0] }
           }
-          transition={reduce || !inView ? { duration: 0 } : { duration: CYCLE, times: [0, 0.04 + i * 0.1, 0.2 + i * 0.1, 0.26 + i * 0.1, 1], repeat: Infinity, ease: "easeInOut" }}
+          transition={
+            reduce || !inView
+              ? { duration: 0 }
+              : {
+                  duration: CYCLE,
+                  times: [0, (i * 1.05) / CYCLE, (i * 1.05 + 1.35) / CYCLE, (i * 1.05 + 1.6) / CYCLE, 1],
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }
+          }
         >
           <div className="w-[6%]">
             <Crate {...c} />

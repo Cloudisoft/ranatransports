@@ -155,7 +155,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 
 /* Spec-sheet truck interactions */
 @keyframes wheel-spin { to { transform: rotate(360deg); } }
-.group:hover .wheel-spin, .group:focus-within .wheel-spin { animation: wheel-spin 0.9s linear infinite; }
+.group:hover svg .wheel-spin, .group:focus-within svg .wheel-spin { animation: wheel-spin 0.9s linear infinite; }
 .group:hover .truck-drive, .group:focus-within .truck-drive { transform: translateX(6px); }
 .group:hover .tipper-body, .group:focus-within .tipper-body { transform: rotate(-20deg); }
 .spec-paper {
@@ -202,3 +202,12 @@ html[data-motion="reduced"] .group:hover .truck-drive, html[data-motion="reduced
 }
 @keyframes grid-scroll { from { transform: translate3d(0, -70px, 0); } to { transform: translate3d(0, 0, 0); } }
 .orb { will-change: transform; transform: translateZ(0); }
+
+/* Spec trucks roll into place (wheels turning) when their card scrolls into view */
+@keyframes truck-drive-in {
+  from { transform: translateX(-70px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.pre-drive .truck-drive { opacity: 0; }
+.drive-in .truck-drive { animation: truck-drive-in 1.3s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+.drive-in .wheel-spin { animation: wheel-spin 0.55s linear 2.4; }

@@ -58,7 +58,6 @@ export function BrandFilm() {
         <video
           ref={video}
           className="absolute inset-0 size-full object-cover"
-          src="/media/rana-brand-film.mp4"
           poster="/media/rana-brand-film-poster.jpg"
           muted
           playsInline
@@ -72,7 +71,11 @@ export function BrandFilm() {
           }}
           onTimeUpdate={(e) => setProgress(e.currentTarget.currentTime / (e.currentTarget.duration || 1))}
           aria-label="Rana Transports & Logistics brand film: a truck formed of light drives towards the Rana logo. A part of Rana Enterprise, serving from 25 years, all over India."
-        />
+        >
+          {/* AI-enhanced 1080p master: AV1 first (sharper per MB), H.264 for older browsers */}
+          <source src="/media/rana-brand-film-1080p-av1.mp4" type='video/mp4; codecs="av01.0.08M.08"' />
+          <source src="/media/rana-brand-film-1080p.mp4" type="video/mp4" />
+        </video>
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-midnight to-transparent" />
 
         {ended && (

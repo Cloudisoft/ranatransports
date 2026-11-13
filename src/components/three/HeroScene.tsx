@@ -59,13 +59,15 @@ export function HeroScene({ poster, offset = 0.2, className = "" }: { poster: st
         // No hardware WebGL: keep the hero alive with the looping truck film
         <video
           className="absolute inset-0 size-full object-cover opacity-60"
-          src="/media/hero-loop.mp4"
           poster={poster}
           autoPlay={!isMotionPaused()}
           muted
           loop
           playsInline
-        />
+        >
+          <source src="/media/hero-loop-1080p-av1.mp4" type='video/mp4; codecs="av01.0.08M.08"' />
+          <source src="/media/hero-loop-1080p.mp4" type="video/mp4" />
+        </video>
       ) : (
         !ready && (
           // eslint-disable-next-line @next/next/no-img-element
